@@ -1,3 +1,4 @@
+package paa.tpfinal;
 
 public class Point {
 	double x, y;

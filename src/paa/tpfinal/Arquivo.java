@@ -1,35 +1,36 @@
+package paa.tpfinal;
 /*
  * Universidade Federal de Pernambuco
- * Centro de Informática
+ * Centro de Informï¿½tica
  * Disciplina: Algoritmos e Estrutura de Dados
  *
  */
 import java.io.*;
 
 /**
- * Classe que manipula a entrada e saída de dados de um programa através de
+ * Classe que manipula a entrada e saï¿½da de dados de um programa atravï¿½s de
  * arquivos.<br> <br>
  *
  * Exemplo de Uso: <br> <br> <code>
  *
- * // Abre os arquivos de entrada e saída <br>
+ * // Abre os arquivos de entrada e saï¿½da <br>
  * Arquivo io = new Arquivo("L1Q1.in", "L1Q1.out"); <br> <br>
  *
- * // Lê dados do arquivo de entrada <br>
+ * // Lï¿½ dados do arquivo de entrada <br>
  * String s = io.readString(); <br>
  * char c = io.readChar(); <br>
  * int i = io.readInt(); <br>
  * double d = io.readDouble(); <br> <br>
  *
- * // Grava dados no arquivo de saída <br>
+ * // Grava dados no arquivo de saï¿½da <br>
  * io.print("Algoritmos"); <br>
  * io.print(35); <br>
  * io.println(2.3); <br> <br>
  *
- * // Fecha o arquivo após o uso <br>
+ * // Fecha o arquivo apï¿½s o uso <br>
  * io.close(); <br> </code>
  *
- * @author   Emannuel Macêdo (egm@cin.ufpe.br)
+ * @author   Emannuel Macï¿½do (egm@cin.ufpe.br)
  *
  */
 
@@ -44,11 +45,11 @@ public class Arquivo {
 
    /**
     * Construtor da classe Arquivo. Abre o arquivo de entrada no modo leitura,
-    * e o arquivo de saída no modo gravação. Se o arquivo de saída já existir,
-    * seu conteúdo é descartado.
+    * e o arquivo de saï¿½da no modo gravaï¿½ï¿½o. Se o arquivo de saï¿½da jï¿½ existir,
+    * seu conteï¿½do ï¿½ descartado.
     *
     * @param in     nome do arquivo de entrada de dados
-    * @param out    nome do arquivo de saída de dados
+    * @param out    nome do arquivo de saï¿½da de dados
     *
     */
     public Arquivo(String in, String out) {
@@ -56,7 +57,7 @@ public class Arquivo {
             // abre o arquivo de entrada no modo leitura
             this.in = new BufferedReader(new FileReader(in));
 
-            // abre o arquivo de saída no modo gravação
+            // abre o arquivo de saï¿½da no modo gravaï¿½ï¿½o
             this.out = new PrintWriter(new FileWriter(out), true);
 
             this.initBuffer();
@@ -66,12 +67,12 @@ public class Arquivo {
         }
     }
 
-   /** Fecha o arquivo quando o garbage collector é chamado */
+   /** Fecha o arquivo quando o garbage collector ï¿½ chamado */
     protected void finalize() {
         this.close();
     }
 
-   /** Fecha o arquivo, após o seu uso. */
+   /** Fecha o arquivo, apï¿½s o seu uso. */
     public void close() {
         try {
             if (this.in != null) {
@@ -89,7 +90,7 @@ public class Arquivo {
     }
 
     /* -------------------------------------------- */
-    /* ------------ FUNÇÕES DE LEITURA ------------ */
+    /* ------------ FUNï¿½ï¿½ES DE LEITURA ------------ */
     /* -------------------------------------------- */
 
     /** Indica se foi encontrado o fim do arquivo. */
@@ -103,10 +104,10 @@ public class Arquivo {
     }
 
    /**
-    * Lê uma linha do arquivo. Se parte da linha já foi lida, então o restante
-    * é retornado, mesmo que seja uma linha em branco (String de tamanho zero).
+    * Lï¿½ uma linha do arquivo. Se parte da linha jï¿½ foi lida, entï¿½o o restante
+    * ï¿½ retornado, mesmo que seja uma linha em branco (String de tamanho zero).
     *
-    * @return   a próxima linha lida do arquivo, ou <code>null</code> se o fim
+    * @return   a prï¿½xima linha lida do arquivo, ou <code>null</code> se o fim
     *           do arquivo for encontrado
     *
     */
@@ -133,9 +134,9 @@ public class Arquivo {
     }
 
    /**
-    * Lê o próximo caractere do arquivo, incluindo espaços (' ') e quebras de
-    * linha ('\n'). Se o fim do arquivo for alcançado, o caractere nulo ('\0')
-    * é retornado.
+    * Lï¿½ o prï¿½ximo caractere do arquivo, incluindo espaï¿½os (' ') e quebras de
+    * linha ('\n'). Se o fim do arquivo for alcanï¿½ado, o caractere nulo ('\0')
+    * ï¿½ retornado.
     *
     * @return   o caractere lido
     */
@@ -158,7 +159,7 @@ public class Arquivo {
     }
 
    /**
-    * Lê uma string do arquivo.
+    * Lï¿½ uma string do arquivo.
     *
     * @return   a string lida
     *
@@ -192,9 +193,9 @@ public class Arquivo {
     }
 
    /**
-    * Lê um inteiro do arquivo.
+    * Lï¿½ um inteiro do arquivo.
     *
-    * @return   o número lido
+    * @return   o nï¿½mero lido
     *
     */
     public int readInt() {
@@ -202,9 +203,9 @@ public class Arquivo {
     }
 
    /**
-    * Lê um double do arquivo.
+    * Lï¿½ um double do arquivo.
     *
-    * @return   o número lido
+    * @return   o nï¿½mero lido
     *
     */
     public double readDouble() {
@@ -212,7 +213,7 @@ public class Arquivo {
     }
 
     /* -------------------------------------------- */
-    /* ------ FUNÇÕES AUXILIARES DE LEITURA ------- */
+    /* ------ FUNï¿½ï¿½ES AUXILIARES DE LEITURA ------- */
     /* -------------------------------------------- */
 
     /** Prepara o buffer de entrada para ser usado */
@@ -258,7 +259,7 @@ public class Arquivo {
         return (this.primLin + this.contLin - 1);
     }
 
-    /** Encontra a posição do próximo token a ser lido */
+    /** Encontra a posiï¿½ï¿½o do prï¿½ximo token a ser lido */
     private void findNext() {
         try {
             String line = this.buffer[this.primLin];
@@ -288,13 +289,13 @@ public class Arquivo {
     }
 
     /* -------------------------------------------- */
-    /* ------------ FUNÇÕES DE ESCRITA ------------ */
+    /* ------------ FUNï¿½ï¿½ES DE ESCRITA ------------ */
     /* -------------------------------------------- */
 
    /**
     * Escreve um caractere no arquivo.
     *
-    * @param c     caractere que será escrito no arquivo
+    * @param c     caractere que serï¿½ escrito no arquivo
     *
     */
     public void print(char c) {
@@ -304,7 +305,7 @@ public class Arquivo {
    /**
     * Escreve uma string no arquivo.
     *
-    * @param s     string que será escrita no arquivo
+    * @param s     string que serï¿½ escrita no arquivo
     *
     */
     public void print(String s) {
@@ -314,7 +315,7 @@ public class Arquivo {
    /**
     * Escreve um inteiro no arquivo.
     *
-    * @param i     número que será escrito no arquivo
+    * @param i     nï¿½mero que serï¿½ escrito no arquivo
     *
     */
     public void print(int i) {
@@ -324,7 +325,7 @@ public class Arquivo {
    /**
     * Escreve um double no arquivo.
     *
-    * @param d     número que será escrito no arquivo
+    * @param d     nï¿½mero que serï¿½ escrito no arquivo
     * @exception IOException   em caso de erro de I/O
     *
     */
@@ -333,12 +334,12 @@ public class Arquivo {
     }
 
    /**
-    * Escreve um double no arquivo, com um número fixo de casas decimais. Uma
-    * precisão menor ou igual a zero indica que apenas a parte inteira será
+    * Escreve um double no arquivo, com um nï¿½mero fixo de casas decimais. Uma
+    * precisï¿½o menor ou igual a zero indica que apenas a parte inteira serï¿½
     * impressa (com arredondamento).
     *
-    * @param d     número que será escrito no arquivo
-    * @param dec   número de casas decimais de precisao
+    * @param d     nï¿½mero que serï¿½ escrito no arquivo
+    * @param dec   nï¿½mero de casas decimais de precisao
     * @exception IOException   em caso de erro de I/O
     *
     */
@@ -347,7 +348,7 @@ public class Arquivo {
     }
 
    /**
-    * Começa uma nova linha no arquivo.
+    * Comeï¿½a uma nova linha no arquivo.
     *
     */
     public void println() {
@@ -355,9 +356,9 @@ public class Arquivo {
     }
 
    /**
-    * Escreve um caractere e começa uma nova linha no arquivo.
+    * Escreve um caractere e comeï¿½a uma nova linha no arquivo.
     *
-    * @param c     caractere que será escrito no arquivo
+    * @param c     caractere que serï¿½ escrito no arquivo
     *
     */
     public void println(char c) {
@@ -365,9 +366,9 @@ public class Arquivo {
     }
 
    /**
-    * Escreve uma string e começa uma nova linha no arquivo.
+    * Escreve uma string e comeï¿½a uma nova linha no arquivo.
     *
-    * @param s        string que será gravada no arquivo
+    * @param s        string que serï¿½ gravada no arquivo
     *
     */
     public void println(String s) {
@@ -375,9 +376,9 @@ public class Arquivo {
     }
 
    /**
-    * Escreve um inteiro e começa uma nova linha no arquivo.
+    * Escreve um inteiro e comeï¿½a uma nova linha no arquivo.
     *
-    * @param i        número que será gravado no arquivo
+    * @param i        nï¿½mero que serï¿½ gravado no arquivo
     *
     */
     public void println(int i) {
@@ -385,9 +386,9 @@ public class Arquivo {
     }
 
    /**
-    * Escreve um double e começa uma nova linha no arquivo.
+    * Escreve um double e comeï¿½a uma nova linha no arquivo.
     *
-    * @param d        número que será gravado no arquivo
+    * @param d        nï¿½mero que serï¿½ gravado no arquivo
     * @exception IOException   em caso de erro de I/O
     *
     */
@@ -396,12 +397,12 @@ public class Arquivo {
     }
 
    /**
-    * Escreve um double no arquivo, com um número fixo de casas decimais e
-    * começa uma nova linha no arquivo. Uma precisão menor ou igual a zero
-    * indica que apenas a parte inteira será impressa (com arredondamento).
+    * Escreve um double no arquivo, com um nï¿½mero fixo de casas decimais e
+    * comeï¿½a uma nova linha no arquivo. Uma precisï¿½o menor ou igual a zero
+    * indica que apenas a parte inteira serï¿½ impressa (com arredondamento).
     *
-    * @param d     número que será escrito no arquivo
-    * @param dec   número de casas decimais de precisao
+    * @param d     nï¿½mero que serï¿½ escrito no arquivo
+    * @param dec   nï¿½mero de casas decimais de precisao
     * @exception IOException   em caso de erro de I/O
     *
     */
@@ -410,7 +411,7 @@ public class Arquivo {
     }
 
    /**
-    * Grava os dados do buffer no arquivo. Isto é feito automaticamente a cada
+    * Grava os dados do buffer no arquivo. Isto ï¿½ feito automaticamente a cada
     * quebra de linha (<code>println</code>).
     */
     public void flush() {
@@ -418,7 +419,7 @@ public class Arquivo {
     }
 
     /* -------------------------------------------- */
-    /* ------ FUNÇÕES AUXILIARES DE ESCRITA ------- */
+    /* ------ FUNï¿½ï¿½ES AUXILIARES DE ESCRITA ------- */
     /* -------------------------------------------- */
 
 	private String formatDouble(double d, int dec) {

@@ -1,3 +1,4 @@
+package paa.tpfinal;
 public class Generator {
 	public static void main(String[] args) {
 		Arquivo arq = new Arquivo("entradas", "in0");
