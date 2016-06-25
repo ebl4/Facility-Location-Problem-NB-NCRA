@@ -1,8 +1,8 @@
 package paa.tpfinal.nb;
 
 public class Bracket {
-	int upperbound;
-	int lowerbound;
+	double upperbound;
+	double lowerbound;
 	
 	public Bracket() {
 		// TODO Auto-generated constructor stub		
