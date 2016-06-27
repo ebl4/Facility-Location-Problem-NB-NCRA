@@ -112,7 +112,7 @@ public class NCRA {
 		}
 		limite = arq.readInt();
 		for (int i = 0; i < m; i++) {
-			Cluster c = new Cluster();
+			Cluster c = new Cluster(limite);
 			for (int j = i*numP/m; j < (i+1)*numP/m; j++) {
 				c.addPoint(points.get(j));
 			}

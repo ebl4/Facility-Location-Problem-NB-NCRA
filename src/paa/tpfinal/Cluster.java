@@ -6,9 +6,9 @@ public class Cluster {
 	List<Point> customers;	
 	Point xPoint;
 	
-	public Cluster(){
+	public Cluster(int limite){
 		customers = new ArrayList<Point>();
-		this.xPoint = new Point();
+		this.xPoint = new Point(limite*Math.random(), limite*Math.random());
 	}
 	
 	public Point getxPoint() {
