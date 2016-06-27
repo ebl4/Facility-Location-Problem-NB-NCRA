@@ -1,7 +1,10 @@
-package paa.tpfinal;
+package paa.tpfinal.nb;
+
+import paa.tpfinal.Arquivo;
+
 public class Generator {
 	public static void main(String[] args) {
-		Arquivo arq = new Arquivo("entradas", "in0");
+		Arquivo arq = new Arquivo("entradas", "inNB0");
 		int m = 4, limite = 10;
 		int numP = 10;
 		StringBuffer sb = new StringBuffer();
@@ -20,8 +23,19 @@ public class Generator {
 				sb.append("\n");
 			}
 		}
-		sb.append(limite);
-		String resp = sb.substring(0, sb.length());
+		for (int i = 1; i <= numP; i++) {
+			double weight = limite*Math.random();
+			sb.append(weight); 
+			sb.append(" "); 
+		}
+		sb.append("\n");
+		double x = limite*Math.random();
+		double y = limite*Math.random();
+		sb.append(x); 
+		sb.append(" "); 
+		sb.append(y);
+		sb.append(" ");
+		String resp = sb.substring(0, sb.length()-1);
 		arq.print(resp);
 		arq.close();
 	}

@@ -3,14 +3,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cluster {
-	List<Point> customers;
-	Point centroid;
+	List<Point> customers;	
+	Point xPoint;
 	
 	public Cluster(){
 		customers = new ArrayList<Point>();
-		this.centroid = new Point();
+		this.xPoint = new Point();
 	}
 	
+	public Point getxPoint() {
+		return xPoint;
+	}
+
+	public void setxPoint(Point xPoint) {
+		this.xPoint = xPoint;
+	}
+
+	public List<Point> getCustomers() {
+		return customers;
+	}
+
+	public void setCustomers(List<Point> customers) {
+		this.customers = customers;
+	}
+
 	public void addPoint(Point a){
 		customers.add(a);
 	}
@@ -22,5 +38,5 @@ public class Cluster {
 		else
 			return null;
 	}
-	
+
 }

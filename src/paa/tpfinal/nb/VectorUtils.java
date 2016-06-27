@@ -10,6 +10,14 @@ public class VectorUtils {
 		vector.setY(x.getY() - a.getY());
 		return vector;
 	}
+	
+	public boolean isEqual(Point x, Point a){
+		return (x.getX()==a.getX() && x.getY()==a.getY())?true:false;
+	}
+	
+	public Point diffVector(Point x, Point a){
+		return this.makeVector(x, a);
+	}
 
 	public Point sumVector(Point x, Point a){
 		Point vector = new Point();
