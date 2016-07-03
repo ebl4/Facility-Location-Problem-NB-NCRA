@@ -12,10 +12,12 @@ import paa.tpfinal.nb.NB;
 public class CooperNB {
 	NCRA ncra;
 	NB nb;
+	int reassigns;
 
 	public CooperNB() {
 		ncra = new NCRA();
 		nb = new NB();
+		this.reassigns = 0;
 	}
 
 	public void initNCRA(List<Cluster> clusters, int limite){
@@ -23,30 +25,40 @@ public class CooperNB {
 		ncra.setLimite(limite);;
 	}
 
-	public Cluster calcXPoint(Cluster clusterCurr, List<Double> w){
+	public Cluster calcXPoint(Cluster clusterCurr, List<Double> w, int k){
 		clusterCurr.setxPoint(nb.nbMethod(clusterCurr.getCustomers(), 
-				clusterCurr.getxPoint(), w));
+				clusterCurr.getxPoint(), w, k));
 		return clusterCurr;
 	}
-
-	public void cooperNBMethod(List<Cluster> clusters, int iter){
-		List<List<Double>> w = new ArrayList<List<Double>>();   
+	
+	public List<Double> wCluster(Cluster cluster){
+		List<Double> result = new ArrayList<Double>();
+		for (int i = 0; i < cluster.getCustomers().size(); i++) {
+			result.add(cluster.getCustomers().get(i).getW());
+		}
+		return result;
+	}
+	
+	public void initCustormersWeights(Cluster cluster){
+		for (int i = 0; i < cluster.getCustomers().size(); i++) {
+			cluster.getCustomers().get(i).setW(ncra.getLimite()*Math.random());
+		}
+	}
+	
+	public List<Cluster> cooperNBMethod(List<Cluster> clusters, int iter){
 		int contReassign = 0, cont = 0;		
-		boolean reassign = false;
+		boolean reassign = true;
 
+		//inicializando os pesos dos clientes dos clusters e
 		//calculando pontos dos clusters via NB method
 		for (int i = 0; i < clusters.size(); i++) {
-			List<Double> wCurr = new ArrayList<Double>();
-			Cluster clusterCurr = clusters.get(i);
-			for (int j = 0; j < clusterCurr.getCustomers().size(); j++) {
-				wCurr.add(ncra.getLimite()*Math.random());
-			}
-			w.add(wCurr);
-			calcXPoint(clusterCurr, w.get(i));
-		}
-
+			initCustormersWeights(clusters.get(i));
+			clusters.set(i,calcXPoint(clusters.get(i), wCluster(clusters.get(i)), 0));
+		}	
+		
 		//reatribuicoes			
-		while(cont < iter){
+		while(reassign){
+			reassign = false;
 			for (int l = 0; l < clusters.size(); l++){
 				Cluster clusterCurr = clusters.get(l);
 				List<Point> customersCluster = clusterCurr.getCustomers();
@@ -63,22 +75,34 @@ public class CooperNB {
 							clusterCurr.getCustomers().remove(aj);
 							kCluster.getCustomers().add(aj);
 
-							clusters.set(l, calcXPoint(clusterCurr, w.get(l)));
-							clusters.set(k, calcXPoint(kCluster, w.get(k)));
+							clusterCurr = calcXPoint(clusterCurr, wCluster(clusterCurr), cont+1);
+							kCluster = calcXPoint(kCluster, wCluster(kCluster), cont+1);
+							
+							clusters.set(l, clusterCurr);
+							clusters.set(k, kCluster);
 							reassign = true;
 							contReassign++;
 						}
 					}
 				}
 			}
+			cont++;
 		}
-		cont++;
+		reassigns = cont;
+		return clusters;
 	}
-
+	
+	public void showResult(List<Cluster> clusters){
+		for (int i = 0; i < clusters.size(); i++) {
+			System.out.println(clusters.get(i).getxPoint().getX());
+			System.out.println(clusters.get(i).getxPoint().getY());
+		}
+	}
 
 	public static void main(String[] args) {
 		CooperNB cNB = new CooperNB();
-		Arquivo arq = new Arquivo("in0", "out0");
+		Arquivo arq = new Arquivo("inCNB4", "outCNB4");
+		long start = System.currentTimeMillis();
 		List<Point> points = new ArrayList<Point>();
 		List<Cluster> clusters = new ArrayList<Cluster>();  
 		int m = arq.readInt(), limite;
@@ -97,7 +121,12 @@ public class CooperNB {
 			}
 			clusters.add(c);
 		}
-		cNB.initNCRA(clusters, limite);				
-		cNB.cooperNBMethod(clusters, 10);
+		cNB.initNCRA(clusters, limite);
+		clusters = cNB.cooperNBMethod(clusters, 10);
+		long end = System.currentTimeMillis();
+		System.out.println(end-start);
+		System.out.println(cNB.reassigns);
+		System.out.println(cNB.nb.getTotalTCost());
+		//cNB.showResult(clusters);
 	}
 }

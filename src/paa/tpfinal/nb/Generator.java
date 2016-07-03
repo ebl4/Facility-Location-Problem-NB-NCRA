@@ -4,9 +4,9 @@ import paa.tpfinal.Arquivo;
 
 public class Generator {
 	public static void main(String[] args) {
-		Arquivo arq = new Arquivo("entradas", "inNB0");
-		int m = 4, limite = 10;
-		int numP = 10;
+		Arquivo arq = new Arquivo("entradas", "inNB4");
+		int m = 4, limite = 20;
+		int numP = 100000;
 		StringBuffer sb = new StringBuffer();
 		sb.append(m);
 		sb.append(" ");

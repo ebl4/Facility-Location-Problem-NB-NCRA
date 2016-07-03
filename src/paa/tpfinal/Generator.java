@@ -1,9 +1,9 @@
 package paa.tpfinal;
 public class Generator {
 	public static void main(String[] args) {
-		Arquivo arq = new Arquivo("entradas", "in0");
+		Arquivo arq = new Arquivo("entradas", "in5");
 		int m = 4, limite = 10;
-		int numP = 10;
+		int numP = 10000;
 		StringBuffer sb = new StringBuffer();
 		sb.append(m);
 		sb.append(" ");

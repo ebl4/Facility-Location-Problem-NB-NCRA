@@ -14,8 +14,7 @@ public class NB {
 	Bracket brt; 
 	double epsilon;
 	double totalTCost;
-	Point totalCostGradient;
-	StringBuffer sb;
+
 
 	public NB() {
 		vu = new VectorUtils();
@@ -25,6 +24,33 @@ public class NB {
 		this.totalTCost = 0;
 		sb = new StringBuffer();
 	}
+
+	public Bracket getBrt() {
+		return brt;
+	}
+
+	public void setBrt(Bracket brt) {
+		this.brt = brt;
+	}
+
+	public double getTotalTCost() {
+		return totalTCost;
+	}
+
+	public void setTotalTCost(double totalTCost) {
+		this.totalTCost = totalTCost;
+	}
+
+	public Point getTotalCostGradient() {
+		return totalCostGradient;
+	}
+
+	public void setTotalCostGradient(Point totalCostGradient) {
+		this.totalCostGradient = totalCostGradient;
+	}
+
+	Point totalCostGradient;
+	StringBuffer sb;
 
 	public int minWeitght(List<Double> w){
 		double min = Double.MAX_VALUE;
@@ -39,19 +65,24 @@ public class NB {
 	}
 
 	public void initBracket(List<Point> customers, Point x, List<Double> w){
+		double weigthRemoved;
+		int indexMinW2;
 		this.setTotalCost(customers, x, w);
 		brt.upperbound = totalTCost;
 
 		//primeiro menor peso (indice)
 		int indexMinW = this.minWeitght(w);
-		Point ai = customers.get(indexMinW);		
-		double weigthRemoved = w.remove(indexMinW);
-
-		//segundo menor peso (indice)
-		int indexMinW2 = this.minWeitght(w);
-
-		//reinserindo elemento removido
-		w.add(indexMinW, weigthRemoved);
+		Point ai = customers.get(indexMinW);
+		if(w.size() > 1){
+			weigthRemoved = w.remove(indexMinW);
+			//segundo menor peso (indice)
+			indexMinW2 = this.minWeitght(w);
+			//reinserindo elemento removido
+			w.add(indexMinW, weigthRemoved);
+		}
+		else{
+			indexMinW2 = indexMinW;
+		}
 		Point aj = customers.get(indexMinW2);
 		brt.lowerbound = vu.norma(vu.makeVector(ai, aj));
 	}
@@ -67,8 +98,6 @@ public class NB {
 		totalTCost = 0;
 		totalCostGradient = new Point();
 		Point costGradient = new Point();
-		//System.out.println(x.getX());
-		//System.out.println(x.getY());
 		for (int i = 0; i < customers.size(); i++) {
 			if(vu.isEqual(x, customers.get(i))){
 				System.out.println("Equal!");
@@ -81,18 +110,16 @@ public class NB {
 		}
 		//Vetor gradiente de custo total com transporte
 		totalCostGradient = costGradient;
-		//		System.out.println(totalCostGradient.getX());
-		//		System.out.println(totalCostGradient.getY());
 	}
 
-	//terminar de encontrar o ponto apos k iteracoes
-	public Point nbMethod(List<Point> customers, Point x, List<Double> w){
-
+	public Point nbMethod(List<Point> customers, Point x, List<Double> w, int k){
 		sb = new StringBuffer();
 		Point x1;
-		this.initBracket(customers, x, w);
+		if(k <= 0){
+			this.initBracket(customers, x, w);
+		}
 		int count = 0;
-		while(count < 10 && (brt.upperbound - brt.lowerbound) >= this.epsilon){			
+		while((brt.upperbound - brt.lowerbound) >= this.epsilon){			
 			count++;
 			//gravacao dos resultados
 			sb.append("Iteracao ");
@@ -113,10 +140,8 @@ public class NB {
 			double middlebound = linearCombination(brt.upperbound, brt.lowerbound);
 			double partial = (totalCostX-middlebound)/Math.pow(vu.norma(totalCostGradient),2);			
 			x1 = vu.diffVector(x, vu.multVector(totalCostGradient, partial));
-
 			setTotalCost(customers, x1, w);
 			totalCostX1 = totalTCost;
-
 			if(totalCostX1 < totalCostX){ //C(x_k+1) < C(x_k) 
 				brt.upperbound = totalCostX1;
 			}
@@ -125,14 +150,13 @@ public class NB {
 				//x = x1;
 			}
 		}
-
 		return x;
 	}
 
 	public static void main(String[] args) {
 		long start = System.currentTimeMillis();
 		NB algo = new NB();
-		Arquivo arq = new Arquivo("inNB0", "outNB0");
+		Arquivo arq = new Arquivo("inNB4", "outNB4");
 		double x, y;
 		List<Double> weights = new ArrayList<Double>();
 		List<Point> pointsCustomers = new ArrayList<Point>();
@@ -148,12 +172,14 @@ public class NB {
 			weights.add(arq.readDouble());
 		}
 		xPoint = new Point(arq.readDouble(),arq.readDouble());
-		algo.nbMethod(pointsCustomers, xPoint, weights);
+		algo.nbMethod(pointsCustomers, xPoint, weights, 0);
 		long end = System.currentTimeMillis();
-		System.out.println(xPoint.getX());
-		System.out.println(xPoint.getY());
+		//		System.out.println(xPoint.getX());
+		//		System.out.println(xPoint.getY());
 		arq.print(algo.sb.substring(0, algo.sb.length()));
-		arq.println("Tempo: ");
+		arq.print("Total cost: ");
+		arq.println(algo.totalTCost);
+		arq.print("Tempo: ");
 		arq.println(end-start);
 		arq.close();
 	}
